@@ -11,8 +11,11 @@ const cancelButton = document.getElementById("cancel-button");
 const formSection = document.getElementById("item-form-section");
 const itemForm = document.getElementById("item-form");
 const projectItemsContainer = document.getElementById("project-items");
+const categoryFilter = document.getElementById("category-filter");
+const statusFilter = document.getElementById("status-filter");
 
 let editingItemId = null;
+
 
 // Open form
 addItemButton.addEventListener("click", () => {
@@ -30,10 +33,23 @@ cancelButton.addEventListener("click", () => {
 // Load project items from Supabase
 async function loadProjectItems() {
 
-  const { data, error } = await supabaseClient
+  let query = supabaseClient
     .from("project_items")
     .select("*")
     .order("created_at", { ascending: false });
+
+  const selectedCategory = categoryFilter.value;
+  const selectedStatus = statusFilter.value;
+
+  if (selectedCategory !== "all") {
+    query = query.eq("category", selectedCategory);
+  }
+
+  if (selectedStatus !== "all") {
+    query = query.eq("status", selectedStatus);
+  }
+
+  const { data, error } = await query;
 
   if (error) {
     console.error("Error loading project items:", error);
@@ -46,7 +62,6 @@ async function loadProjectItems() {
     projectItemsContainer.innerHTML = `
       <p>No project items found.</p>
     `;
-
     return;
   }
 
@@ -195,6 +210,16 @@ async function editProjectItem(id) {
 
   formSection.classList.remove("hidden");
 }
+
+
+categoryFilter.addEventListener("change", () => {
+  loadProjectItems();
+});
+
+statusFilter.addEventListener("change", () => {
+  loadProjectItems();
+});
+
 
 // Load items when page opens
 loadProjectItems();
