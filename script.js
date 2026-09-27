@@ -73,7 +73,7 @@ async function loadProjectItems() {
       </p>
 
       <button>Edit</button>
-      <button>Delete</button>
+      <button onclick="deleteProjectItem(${item.id})">Delete</button>
     `;
 
     projectItemsContainer.appendChild(projectCard);
@@ -120,6 +120,31 @@ itemForm.addEventListener("submit", async (event) => {
   loadProjectItems();
 });
 
+
+// Delete Project Items
+async function deleteProjectItem(id) {
+
+  const confirmed = confirm(
+    "Are you sure you want to delete this project item?"
+  );
+
+  if (!confirmed) {
+    return;
+  }
+
+  const { error } = await supabaseClient
+    .from("project_items")
+    .delete()
+    .eq("id", id);
+
+  if (error) {
+    console.error("Error deleting item:", error);
+    alert("There was an error deleting the project item.");
+    return;
+  }
+
+  loadProjectItems();
+}
 
 // Load items when page opens
 loadProjectItems();
