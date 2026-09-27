@@ -12,6 +12,7 @@ const formSection = document.getElementById("item-form-section");
 const itemForm = document.getElementById("item-form");
 const projectItemsContainer = document.getElementById("project-items");
 
+let editingItemId = null;
 
 // Open form
 addItemButton.addEventListener("click", () => {
@@ -72,7 +73,7 @@ async function loadProjectItems() {
         ${item.description || "No description provided."}
       </p>
 
-      <button>Edit</button>
+      <button onclick="editProjectItem(${item.id})">Edit</button>
       <button onclick="deleteProjectItem(${item.id})">Delete</button>
     `;
 
@@ -81,7 +82,7 @@ async function loadProjectItems() {
 }
 
 
-// Add a project item
+// Submit project item
 itemForm.addEventListener("submit", async (event) => {
 
   event.preventDefault();
@@ -91,27 +92,51 @@ itemForm.addEventListener("submit", async (event) => {
   const status = document.getElementById("status").value;
   const description = document.getElementById("description").value;
 
-  const { data, error } = await supabaseClient
-    .from("project_items")
-    .insert([
-      {
+  let error;
+
+  if (editingItemId === null) {
+
+    const result = await supabaseClient
+      .from("project_items")
+      .insert([
+        {
+          title: title,
+          category: category,
+          status: status,
+          description: description
+        }
+      ]);
+
+    error = result.error;
+
+  } else {
+
+    const result = await supabaseClient
+      .from("project_items")
+      .update({
         title: title,
         category: category,
         status: status,
         description: description
-      }
-    ]);
+      })
+      .eq("id", editingItemId);
+
+    error = result.error;
+  }
 
   if (error) {
-
-    console.error("Error adding item:", error);
-
-    alert("There was an error adding the project item.");
-
+    console.error("Error saving item:", error);
+    alert("There was an error saving the project item.");
     return;
   }
 
-  alert("Project item added successfully!");
+  alert(
+    editingItemId === null
+      ? "Project item added successfully!"
+      : "Project item updated successfully!"
+  );
+
+  editingItemId = null;
 
   itemForm.reset();
 
@@ -144,6 +169,31 @@ async function deleteProjectItem(id) {
   }
 
   loadProjectItems();
+}
+
+// Edit Project Items
+async function editProjectItem(id) {
+
+  const { data, error } = await supabaseClient
+    .from("project_items")
+    .select("*")
+    .eq("id", id)
+    .single();
+
+  if (error) {
+    console.error("Error loading item:", error);
+    alert("There was an error loading the project item.");
+    return;
+  }
+
+  editingItemId = id;
+
+  document.getElementById("title").value = data.title;
+  document.getElementById("category").value = data.category;
+  document.getElementById("status").value = data.status;
+  document.getElementById("description").value = data.description || "";
+
+  formSection.classList.remove("hidden");
 }
 
 // Load items when page opens
