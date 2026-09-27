@@ -3,30 +3,44 @@
 
 <head>
   <meta charset="UTF-8">
+
+  <!-- Makes the website scale correctly on phones and smaller screens -->
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
   <title>ROV Build & Test Tracker</title>
 
+  <!-- Connects the CSS stylesheet -->
   <link rel="stylesheet" href="styles.css">
 </head>
 
 <body>
 
+  <!-- Website header -->
   <header>
     <h1>ROV Build & Test Tracker</h1>
     <p>Senior Design Project Management</p>
   </header>
 
+
+  <!-- Main website content -->
   <main>
 
+    <!--
+      Controls section
+      Contains the button for adding a new project item
+      and the category/status filters.
+    -->
     <section class="controls">
 
       <button id="add-item-button">
         + Add Project Item
       </button>
 
+
+      <!-- Filters used to limit which project items are displayed -->
       <div class="filters">
 
+        <!-- Category filter -->
         <select id="category-filter">
           <option value="all">All Categories</option>
           <option value="Mechanical">Mechanical</option>
@@ -38,6 +52,8 @@
           <option value="Other">Other</option>
         </select>
 
+
+        <!-- Status filter -->
         <select id="status-filter">
           <option value="all">All Statuses</option>
           <option value="Planned">Planned</option>
@@ -51,12 +67,21 @@
     </section>
 
 
+    <!--
+      Add/Edit form
+
+      The "hidden" class keeps this section hidden until
+      the user clicks Add Project Item or Edit.
+    -->
     <section id="item-form-section" class="hidden">
 
       <h2>Add / Edit Project Item</h2>
 
+
+      <!-- Form used for both adding and editing project items -->
       <form id="item-form">
 
+        <!-- Project title -->
         <label for="title">
           Title
         </label>
@@ -68,6 +93,7 @@
         >
 
 
+        <!-- Project category -->
         <label for="category">
           Category
         </label>
@@ -105,6 +131,7 @@
         </select>
 
 
+        <!-- Project status -->
         <label for="status">
           Status
         </label>
@@ -130,6 +157,7 @@
         </select>
 
 
+        <!-- Optional description or project notes -->
         <label for="description">
           Description
         </label>
@@ -141,12 +169,15 @@
         ></textarea>
 
 
+        <!-- Save and cancel buttons -->
         <div class="form-buttons">
 
+          <!-- Submits the form -->
           <button type="submit">
             Save Item
           </button>
 
+          <!-- Closes the form without saving -->
           <button
             type="button"
             id="cancel-button"
@@ -161,6 +192,12 @@
     </section>
 
 
+    <!--
+      Project item display area
+
+      JavaScript loads the project items from Supabase
+      and inserts their cards inside this div.
+    -->
     <section class="project-section">
 
       <h2>
@@ -175,10 +212,14 @@
   </main>
 
 
-  <!-- Supabase library -->
+  <!--
+    Loads the Supabase JavaScript library.
+    This lets script.js communicate with our Supabase database.
+  -->
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 
-  <!-- Our JavaScript -->
+
+  <!-- Loads our own JavaScript after Supabase has loaded -->
   <script src="script.js"></script>
 
 </body>

@@ -1,13 +1,34 @@
+/*
+  =====================================================
+  GLOBAL SETTINGS
+  =====================================================
+*/
+
+/*
+  Makes element widths easier to control by including
+  padding and borders inside the specified width.
+*/
 * {
   box-sizing: border-box;
 }
 
+
+/*
+  Main page appearance
+*/
 body {
   margin: 0;
   font-family: Arial, sans-serif;
   background-color: #f4f6f8;
   color: #222;
 }
+
+
+/*
+  =====================================================
+  HEADER
+  =====================================================
+*/
 
 header {
   background-color: #123b5d;
@@ -16,128 +37,279 @@ header {
   text-align: center;
 }
 
+
+/* Reduce space below the main heading */
 header h1 {
   margin-bottom: 5px;
 }
 
+
+/* Reduce space above the subtitle */
 header p {
   margin-top: 0;
 }
 
+
+/*
+  =====================================================
+  MAIN CONTENT
+  =====================================================
+*/
+
 main {
   width: 90%;
+
+  /* Prevents the page from becoming too wide */
   max-width: 1000px;
+
+  /* Centers the page horizontally */
   margin: 30px auto;
 }
 
+
+/*
+  =====================================================
+  TOP CONTROLS
+  =====================================================
+
+  Holds the Add Project Item button and filters.
+*/
+
 .controls {
   display: flex;
+
+  /* Places button on the left and filters on the right */
   justify-content: space-between;
+
   align-items: center;
+
   margin-bottom: 25px;
 }
 
+
+/*
+  Keeps the category and status filters next
+  to each other.
+*/
 .filters {
   display: flex;
   gap: 10px;
 }
 
+
+/*
+  =====================================================
+  BUTTONS
+  =====================================================
+*/
+
 button {
   background-color: #1769aa;
   color: white;
+
   border: none;
+
   padding: 10px 16px;
+
   border-radius: 5px;
+
+  /* Shows a hand cursor when hovering over buttons */
   cursor: pointer;
 }
 
+
+/* Darkens buttons when the mouse moves over them */
 button:hover {
   background-color: #0f4f82;
 }
 
+
+/*
+  =====================================================
+  FORM INPUTS
+  =====================================================
+*/
+
+/*
+  Apply the same basic style to dropdowns,
+  text inputs, and text areas.
+*/
 select,
 input,
 textarea {
   width: 100%;
+
   padding: 10px;
+
   margin-top: 5px;
   margin-bottom: 15px;
+
   border: 1px solid #bbb;
+
   border-radius: 5px;
 }
 
+
+/*
+  =====================================================
+  ADD / EDIT FORM
+  =====================================================
+*/
+
 #item-form-section {
   background-color: white;
+
   padding: 20px;
+
   margin-bottom: 30px;
+
   border-radius: 8px;
 }
 
+
+/*
+  Places the Save and Cancel buttons next
+  to each other.
+*/
 .form-buttons {
   display: flex;
   gap: 10px;
 }
 
+
+/*
+  =====================================================
+  PROJECT CARDS
+  =====================================================
+*/
+
 .project-card {
   background-color: white;
+
   padding: 20px;
+
   margin-bottom: 15px;
+
   border-radius: 8px;
+
+  /*
+    Blue bar on the left helps visually separate
+    each project item.
+  */
   border-left: 5px solid #1769aa;
 }
 
+
+/* Removes unnecessary space above card titles */
 .project-card h3 {
   margin-top: 0;
 }
 
+
+/* Adds spacing between Edit and Delete buttons */
 .project-card button {
   margin-right: 5px;
 }
+
+
+/*
+  =====================================================
+  HIDDEN ELEMENTS
+  =====================================================
+
+  Used to hide the Add/Edit form until it is needed.
+*/
 
 .hidden {
   display: none;
 }
 
+
+/*
+  =====================================================
+  MOBILE LAYOUT
+  =====================================================
+
+  Changes the layout when the browser width is
+  700 pixels or smaller.
+*/
+
 @media (max-width: 700px) {
 
+  /*
+    Stack the Add button and filters vertically
+    on smaller screens.
+  */
   .controls {
     flex-direction: column;
     align-items: stretch;
     gap: 15px;
   }
 
+
+  /* Stack the two filters vertically */
   .filters {
     flex-direction: column;
   }
 
 }
 
+
+/*
+  =====================================================
+  STATUS LABELS
+  =====================================================
+
+  Gives project statuses a badge-like appearance.
+*/
+
 .status {
   display: inline-block;
+
   padding: 4px 8px;
+
   border-radius: 12px;
+
   font-size: 0.9rem;
+
   font-weight: bold;
 }
 
+
+/* Planned projects */
 .status.planned {
   background-color: #e0e0e0;
 }
 
+
+/* Projects currently being worked on */
 .status.in-progress {
   background-color: #fff3cd;
 }
 
+
+/* Finished projects */
 .status.complete {
   background-color: #d4edda;
 }
 
+
+/* Projects that need additional work */
 .status.needs-revision {
   background-color: #f8d7da;
 }
 
+
+/*
+  =====================================================
+  CREATION DATE
+  =====================================================
+*/
+
 .created-date {
   font-size: 0.85rem;
+
   color: #666;
+
   margin-top: 12px;
 }
