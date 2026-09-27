@@ -46,11 +46,13 @@ The table stores:
 
 ## Project Structure
 
+```text
 rov-build-test-tracker/
 ├── index.html
 ├── styles.css
 ├── script.js
 └── README.md
+```
 
 
 ## Setup Instructions
