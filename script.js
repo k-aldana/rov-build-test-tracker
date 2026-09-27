@@ -19,6 +19,8 @@ let editingItemId = null;
 
 // Open form
 addItemButton.addEventListener("click", () => {
+  editingItemId = null;
+  itemForm.reset();
   formSection.classList.remove("hidden");
 });
 
@@ -27,6 +29,7 @@ addItemButton.addEventListener("click", () => {
 cancelButton.addEventListener("click", () => {
   formSection.classList.add("hidden");
   itemForm.reset();
+  editingItemId = null;
 });
 
 
@@ -53,6 +56,9 @@ async function loadProjectItems() {
 
   if (error) {
     console.error("Error loading project items:", error);
+    projectItemsContainer.innerHTML = `
+      <p>There was an error loading the project items.</p>
+    `;
     return;
   }
 
@@ -68,8 +74,13 @@ async function loadProjectItems() {
   data.forEach((item) => {
 
     const projectCard = document.createElement("div");
-
     projectCard.classList.add("project-card");
+
+    const createdDate = new Date(item.created_at).toLocaleDateString();
+
+    const statusClass = item.status
+      .toLowerCase()
+      .replaceAll(" ", "-");
 
     projectCard.innerHTML = `
       <h3>${item.title}</h3>
@@ -81,15 +92,26 @@ async function loadProjectItems() {
 
       <p>
         <strong>Status:</strong>
-        ${item.status}
+        <span class="status ${statusClass}">
+          ${item.status}
+        </span>
       </p>
 
       <p>
         ${item.description || "No description provided."}
       </p>
 
-      <button onclick="editProjectItem(${item.id})">Edit</button>
-      <button onclick="deleteProjectItem(${item.id})">Delete</button>
+      <p class="created-date">
+        Created: ${createdDate}
+      </p>
+
+      <button onclick="editProjectItem(${item.id})">
+        Edit
+      </button>
+
+      <button onclick="deleteProjectItem(${item.id})">
+        Delete
+      </button>
     `;
 
     projectItemsContainer.appendChild(projectCard);
@@ -102,10 +124,10 @@ itemForm.addEventListener("submit", async (event) => {
 
   event.preventDefault();
 
-  const title = document.getElementById("title").value;
+  const title = document.getElementById("title").value.trim();
   const category = document.getElementById("category").value;
   const status = document.getElementById("status").value;
-  const description = document.getElementById("description").value;
+  const description = document.getElementById("description").value.trim();
 
   let error;
 
@@ -145,11 +167,11 @@ itemForm.addEventListener("submit", async (event) => {
     return;
   }
 
-  alert(
-    editingItemId === null
-      ? "Project item added successfully!"
-      : "Project item updated successfully!"
-  );
+  if (editingItemId === null) {
+    alert("Project item added successfully!");
+  } else {
+    alert("Project item updated successfully!");
+  }
 
   editingItemId = null;
 
@@ -161,7 +183,7 @@ itemForm.addEventListener("submit", async (event) => {
 });
 
 
-// Delete Project Items
+// Delete project item
 async function deleteProjectItem(id) {
 
   const confirmed = confirm(
@@ -186,7 +208,8 @@ async function deleteProjectItem(id) {
   loadProjectItems();
 }
 
-// Edit Project Items
+
+// Edit project item
 async function editProjectItem(id) {
 
   const { data, error } = await supabaseClient
@@ -209,13 +232,21 @@ async function editProjectItem(id) {
   document.getElementById("description").value = data.description || "";
 
   formSection.classList.remove("hidden");
+
+  window.scrollTo({
+    top: 0,
+    behavior: "smooth"
+  });
 }
 
 
+// Category filter
 categoryFilter.addEventListener("change", () => {
   loadProjectItems();
 });
 
+
+// Status filter
 statusFilter.addEventListener("change", () => {
   loadProjectItems();
 });

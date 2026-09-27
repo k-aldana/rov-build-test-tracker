@@ -20,7 +20,10 @@
   <main>
 
     <section class="controls">
-      <button id="add-item-button">+ Add Project Item</button>
+
+      <button id="add-item-button">
+        + Add Project Item
+      </button>
 
       <div class="filters">
 
@@ -44,16 +47,19 @@
         </select>
 
       </div>
+
     </section>
 
 
     <section id="item-form-section" class="hidden">
 
-      <h2>Add Project Item</h2>
+      <h2>Add / Edit Project Item</h2>
 
       <form id="item-form">
 
-        <label for="title">Title</label>
+        <label for="title">
+          Title
+        </label>
 
         <input
           type="text"
@@ -62,34 +68,76 @@
         >
 
 
-        <label for="category">Category</label>
+        <label for="category">
+          Category
+        </label>
 
         <select id="category" required>
-          <option value="Mechanical">Mechanical</option>
-          <option value="Electronics">Electronics</option>
-          <option value="Camera">Camera</option>
-          <option value="Software">Software</option>
-          <option value="Waterproofing">Waterproofing</option>
-          <option value="Testing">Testing</option>
-          <option value="Other">Other</option>
+
+          <option value="Mechanical">
+            Mechanical
+          </option>
+
+          <option value="Electronics">
+            Electronics
+          </option>
+
+          <option value="Camera">
+            Camera
+          </option>
+
+          <option value="Software">
+            Software
+          </option>
+
+          <option value="Waterproofing">
+            Waterproofing
+          </option>
+
+          <option value="Testing">
+            Testing
+          </option>
+
+          <option value="Other">
+            Other
+          </option>
+
         </select>
 
 
-        <label for="status">Status</label>
+        <label for="status">
+          Status
+        </label>
 
         <select id="status" required>
-          <option value="Planned">Planned</option>
-          <option value="In Progress">In Progress</option>
-          <option value="Complete">Complete</option>
-          <option value="Needs Revision">Needs Revision</option>
+
+          <option value="Planned">
+            Planned
+          </option>
+
+          <option value="In Progress">
+            In Progress
+          </option>
+
+          <option value="Complete">
+            Complete
+          </option>
+
+          <option value="Needs Revision">
+            Needs Revision
+          </option>
+
         </select>
 
 
-        <label for="description">Description</label>
+        <label for="description">
+          Description
+        </label>
 
         <textarea
           id="description"
           rows="4"
+          placeholder="Enter project notes or description..."
         ></textarea>
 
 
@@ -113,19 +161,24 @@
     </section>
 
 
-    <section>
+    <section class="project-section">
 
-       <h2>Project Items</h2>
+      <h2>
+        Project Items
+      </h2>
 
-       <div id="project-items">
-       </div>
+      <div id="project-items">
+      </div>
 
     </section>
 
   </main>
 
 
+  <!-- Supabase library -->
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
+  <!-- Our JavaScript -->
   <script src="script.js"></script>
 
 </body>
