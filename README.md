@@ -79,4 +79,4 @@ rov-build-test-tracker/
 
 
 ## Demo Video
-YouTube demo video link will be added here.
+https://youtu.be/hPOTZA1AutA
